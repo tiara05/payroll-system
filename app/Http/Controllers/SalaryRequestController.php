@@ -21,23 +21,21 @@ class SalaryRequestController extends Controller {
 
         if ($user->hasRole('finance')) {
             $title = 'Dashboard Finance';
-            $query->where('user_id', $user->id); // hanya yang dia input
+            $query->where('user_id', $user->id);
         } elseif ($user->hasRole('manager')) {
             $title = 'Dashboard Manager';
-            $query->where('approved_by', $user->id); // hanya yang ditugaskan ke dia
+            $query->where('approved_by', $user->id);
         } elseif ($user->hasRole('director')) {
             $title = 'Dashboard Director';
-            $query->where('status', 'paid'); // hanya yang sudah dibayar
+            $query->where('status', 'paid');
         } else {
             abort(403);
         }
 
-        // Optional filter tambahan (via dropdown)
         if ($request->status) {
             $query->where('status', $request->status);
         }
 
-        // Pagination
         $salaryRequests = $query->latest()->paginate(5);
 
         $employees = Employee::whereHas('user', function ($q) {
