@@ -55,16 +55,6 @@ class SalaryRequestController extends Controller {
         ]);
     }
 
-    public function create()
-    {
-        $employees = Employee::whereHas('user', function ($q) {
-            $q->whereDoesntHave('roles'); 
-        })->get();
-        $managers = User::role('manager')->get();
-
-        return view('salary.create', compact('employees', 'managers'));
-    }
-
     public function store(Request $request)
     {
         try {
@@ -86,8 +76,6 @@ class SalaryRequestController extends Controller {
 
             $totalSalary = $total - $pph;
 
-            \Log::info('Data sebelum simpan', $request->all());
-            
             $salary = SalaryRequest::create([
                 'user_id' => auth()->id(),
                 'employee_id' => $request->employee_id,
@@ -99,26 +87,12 @@ class SalaryRequestController extends Controller {
                 'status' => 'pending',
             ]);
 
-            // Logging saat sukses
-            Log::info('Pengajuan gaji berhasil dibuat', [
-                'by_user' => auth()->user()->name,
-                'for_employee' => $request->employee_id,
-                'total_salary' => $totalSalary,
-            ]);
-
             // Kirim notifikasi ke approver
             $approver = User::findOrFail($request->approver_by);
             $approver->notify(new SalaryRequestNotification("Ada permintaan gaji untuk karyawan ID {$request->employee_id}."));
 
             return redirect()->route('dashboard')->with('success', 'Pengajuan gaji berhasil!');
         } catch (\Exception $e) {
-            // Logging saat gagal
-            Log::error('Gagal menyimpan pengajuan gaji', [
-                'error' => $e->getMessage(),
-                'user_id' => auth()->id(),
-                'request' => $request->all()
-            ]);
-
             return back()->withErrors(['store_error' => 'Terjadi kesalahan saat menyimpan. Silakan coba lagi.'])->withInput();
         }
     }

@@ -43,7 +43,6 @@
     {{-- Header --}}
     
     <div class="d-flex justify-content-between align-items-center mb-3 flex-wrap gap-2">
-        {{-- Filter Status di Kiri --}}
         <form method="GET" action="{{ route('dashboard') }}" class="d-flex align-items-center">
             <label for="status" class="form-label me-2 mb-0">Filter Status:</label>
             <select name="status" id="status" class="form-select form-select-sm w-auto" onchange="this.form.submit()">
@@ -55,7 +54,6 @@
             </select>
         </form>
 
-        {{-- Tombol Buat Pengajuan di Kanan --}}
         @if(Auth::user()->hasRole('finance'))
             <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#createSalaryModal">
                 <i class="feather_icon text-primary" data-feather="plus-circle" style="width: 16px; height: 16px;"></i>
@@ -64,8 +62,6 @@
         @endif
     </div>
 
-
-    {{-- Tabel --}}
     <div class="table-responsive">
         <table class="table table-bordered align-middle">
             <thead class="table-light">
@@ -122,13 +118,11 @@
         </table>
     </div>
 
-    {{-- Pagination --}}
     <div>
         {{ $salaryRequests->withQueryString()->links() }}
     </div>
 </div>
 
-<!-- Modal Form Pengajuan Gaji -->
 <div class="modal fade" id="createSalaryModal" tabindex="-1" aria-labelledby="createSalaryModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg modal-dialog-centered">
         <div class="modal-content">
@@ -175,7 +169,6 @@
         </div>
     </div>
 </div>
-
 
 <script>
     function toggleNotif() {

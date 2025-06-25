@@ -21,21 +21,21 @@ class RoleAndUserSeeder extends Seeder
         // Buat data employees & users yang punya role
         $data = [
             [
-                'nip' => 'EMP037',
+                'nip' => 'EMP001',
                 'name' => 'Dina Keuangan',
                 'divisi' => 'Staff Finance',
                 'email' => 'dinaa@company.com',
                 'role' => 'finance',
             ],
             [
-                'nip' => 'EMP018',
+                'nip' => 'EMP002',
                 'name' => 'Budi Manager',
                 'divisi' => 'Manager Operasional',
                 'email' => 'budii@company.com',
                 'role' => 'manager',
             ],
             [
-                'nip' => 'EMP019',
+                'nip' => 'EMP003',
                 'name' => 'Rama Direktur',
                 'divisi' => 'Direktur',
                 'email' => 'ramaa@company.com',
