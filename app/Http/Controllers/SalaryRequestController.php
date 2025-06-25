@@ -10,7 +10,6 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 use Carbon\Carbon;
 use App\Notifications\SalaryRequestNotification;
-use Illuminate\Support\Facades\Log;
 
 class SalaryRequestController extends Controller {
 
